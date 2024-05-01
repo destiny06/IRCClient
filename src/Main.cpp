@@ -189,6 +189,7 @@ int main(int argc, char* argv[])
             if (client.Login(nick, user))
             {
                 std::cout << "Logged." << std::endl;
+                client.Join("#contreloutre");
 
                 running = true;
                 signal(SIGINT, signalHandler);

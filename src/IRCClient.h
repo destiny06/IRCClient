@@ -81,6 +81,7 @@ public:
 
     bool InitSocket();
     bool Connect(char* /*host*/, int /*port*/);
+    bool Join(std::string channel);
     void Disconnect();
     bool Connected() { return _socket.Connected(); };
 

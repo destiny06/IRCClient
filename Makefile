@@ -1,6 +1,10 @@
-CC=g++
+CC=g++ -std=c++2a
 CFLAGS=-c -Wall
-LDFLAGS=-lpthread
+ifeq ($(OS),Windows_NT)
+	LDFLAGS=-lws2_32
+else
+	LDFLAGS=-lpthread
+endif
 SOURCE_DIR=src
 SOURCE_FILES=$(wildcard $(SOURCE_DIR)/*.cpp)
 OBJECTS=$(SOURCE_FILES:.cpp=.o)

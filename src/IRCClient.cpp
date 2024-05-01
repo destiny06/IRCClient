@@ -70,6 +70,16 @@ bool IRCClient::Login(std::string nick, std::string user, std::string password)
     return false;
 }
 
+bool IRCClient::Join(std::string channel)
+{
+    if (SendIRC("JOIN " + channel))
+    {
+        return true;
+    }
+
+    return false;
+}
+
 void IRCClient::ReceiveData()
 {
     std::string buffer = _socket.ReceiveData();
