@@ -13,9 +13,11 @@
  * http://www.gnu.org/licenses/lgpl.html
  */
 
-#include "IRCHandler.h"
+int global = 0;
+
 #include <regex>
-extern int global = 0;
+#include "IRCHandler.h"
+
 IRCCommandHandler ircCommandTable[NUM_IRC_CMDS] =
     {
         {"PRIVMSG", &IRCClient::HandlePrivMsg},
@@ -87,9 +89,9 @@ void IRCClient::HandlePrivMsg(IRCMessage message)
 {
 
     std::string mainstring = "PRIVMSG ";
- 
+
     std::string to = message.parameters.at(0);
-       mainstring += to + " :";
+    mainstring += to + " :";
     std::string text = message.parameters.at(message.parameters.size() - 1);
     auto lol = std::string("Barbotage");
     // Handle Client-To-Client Protocol
@@ -112,8 +114,6 @@ void IRCClient::HandlePrivMsg(IRCMessage message)
     std::smatch sm;
     if (std::regex_search(orig, sm, dep) && text.find("Inventaire") == std::string::npos && text.find("déposé dans le slot") == std::string::npos && text.find("ramassé") == std::string::npos)
     {
-        global = 0;
-        std::cout << "passing global to 0" << endl;
         string del = "\u2665";
 
         if (std::regex_search(text, sm, coeur))
@@ -142,9 +142,12 @@ void IRCClient::HandlePrivMsg(IRCMessage message)
                             digit = digit + chdar;
                         }
                     }
+                    if (!digit.empty())
+                    {
+                        std::string answer(mainstring + "!pick " + digit);
+                        SendIRC(answer);
+                    }
 
-                    std::string answer(mainstring + "!pick " + digit);
-                    SendIRC(answer);
                     /*if (std::regex_search(att, sm, nombre))
                     {
                         for (auto aa : sm)
@@ -166,15 +169,6 @@ void IRCClient::HandlePrivMsg(IRCMessage message)
     }
 
     const std::regex victoire("VICTOIRE. Pendant la bagarre j'ai vendu");
-
-    if (std::regex_search(text, sm, victoire))
-    {
-        global = 1;
-        std::cout << "passing global to 1" << endl;
-
-        std::string answer(mainstring + "!loot");
-        SendIRC(answer);
-    }
 
     if (text.find(lol) != std::string::npos)
     {

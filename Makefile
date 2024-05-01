@@ -1,4 +1,4 @@
-CC=g++ -std=c++2a
+CC=g++ -std=c++17
 CFLAGS=-c -Wall
 ifeq ($(OS),Windows_NT)
 	LDFLAGS=-lws2_32

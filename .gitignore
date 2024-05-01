@@ -1,7 +1,23 @@
-*.suo
-*.user
-Debug/*
-*.orig
-*.rej
-*.patch
+# Fichiers d'objets et fichiers binaires générés
+*.o
+*.obj
+*.exe
+*.out
+
+# Fichiers de sauvegarde et fichiers temporaires
+*~
+*.swp
+*.swo
+*.swn
+*.bak
+
+# Répertoire de build
+build/
+
+# Fichiers spécifiques à l'IDE
+.vscode/
+.idea/
+
+ircclient
+
 *.log
